@@ -1260,7 +1260,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #86651c;
+  background: #9ff;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2681,7 +2681,7 @@ ul.breadcrumb li + li:last-child {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 body {
-  background: url("https://iw233.cn/API/pc.php");
+  background: url("https://api.paugram.com/bing/");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: 50% 50%;
@@ -2693,7 +2693,7 @@ body {
 }
 @media only screen and (max-width: 1000px) {
   body {
-    background: url("https://iw233.cn/API/mp.php");
+    background: url("https://api.dujin.org/bing/m.php");
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: 50% 50%;

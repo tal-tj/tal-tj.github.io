@@ -1,5 +1,20 @@
 /* global NexT, CONFIG */
 
+/******************Add*****************/
+document.addEventListener('DOMContentLoaded', () => {
+  let bg_img = ["url('https://api.paugram.com/bing/')", "url('https://iw233.cn/API/pc.php)", "url('https://api.ixiaowai.cn/gqapi/gqapi.php')", "url('https://api.lyiqk.cn/scenery')", "url('https://acg.yanwz.cn/scenery/api.php')"];
+  let m_bf_img = ["url('https://iw233.cn/API/mp.php')", "url('https://api.dujin.org/bing/m.php')"];
+  if (document.body.clientWidth > 1000) {
+    // 是电脑屏幕
+    document.getElementsByTagName('body')[0].style.backgroundImage = bg_img[Math.floor(Math.random() * bg_img.length)];
+  } else {
+    // 是手机屏幕
+    document.getElementsByTagName('body')[0].style.backgroundImage = m_bg_img[Math.floor(Math.random() * m_bg_img.length)];
+  }
+});
+/*******************Add*****************/
+
+
 HTMLElement.prototype.wrap = function(wrapper) {
   this.parentNode.insertBefore(wrapper, this);
   this.parentNode.removeChild(this);
