@@ -188,13 +188,6 @@
 
               <time title="创建时间：2022-02-04 15:12:36" itemprop="dateCreated datePublished" datetime="2022-02-04T15:12:36+08:00">2022-02-04</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-17 18:29:48" itemprop="dateModified" datetime="2022-02-17T18:29:48+08:00">2022-02-17</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -230,11 +223,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>在使用<code>vim</code>的时候出现了这个问题，具体错误信息如下：</p>
-<span id="more"></span>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">Python path configuration:</span></span><br><span class="line">  <span class="string">PYTHONHOME</span> <span class="string">=</span> <span class="string">(no</span> <span class="string">set)</span></span><br><span class="line">  <span class="string">PYTHONPATH</span> <span class="string">=</span> <span class="string">(no</span> <span class="string">set)</span></span><br><span class="line">  <span class="string">program</span> <span class="string">name</span> <span class="string">=</span> <span class="string">&#x27;D:\Python38\python.exe&#x27;</span></span><br><span class="line">  <span class="string">isolated</span> <span class="string">=</span> <span class="number">0</span></span><br><span class="line">  <span class="string">environment</span> <span class="string">=</span> <span class="number">1</span></span><br><span class="line">  <span class="string">user</span> <span class="string">site</span> <span class="string">=</span> <span class="number">1</span></span><br><span class="line">  <span class="string">import</span> <span class="string">site</span> <span class="string">=</span> <span class="number">1</span></span><br><span class="line">  <span class="string">sys._base_executable</span> <span class="string">=</span> <span class="string">&#x27;D:\\Python38\\python.exe&#x27;</span></span><br><span class="line">  <span class="string">sys.base_prefix</span> <span class="string">=</span> <span class="string">&#x27;C:\\PythonHome&#x27;</span></span><br><span class="line">  <span class="string">sys.base_exec_prefix</span> <span class="string">=</span> <span class="string">&#x27;C:\\PythonHome&#x27;</span></span><br><span class="line">  <span class="string">sys.executable</span> <span class="string">=</span> <span class="string">&#x27;D:\\Python38\\python.exe&#x27;</span></span><br><span class="line">  <span class="string">sys.prefix</span> <span class="string">=</span> <span class="string">&#x27;C:\\PythonHome&#x27;</span></span><br><span class="line">  <span class="string">sys.exec_prefix</span> <span class="string">=</span> <span class="string">&#x27;C:\\PythonHome&#x27;</span></span><br><span class="line">  <span class="string">sys.path</span> <span class="string">=</span> [</span><br><span class="line">    <span class="string">&#x27;C:\\PythonPath&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;D:\\Python38\\python38.zip&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;C:\\PythonHome\\DLLs&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;C:\\PythonHome\\lib&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;D:\\Python38&#x27;</span>,</span><br><span class="line">  ]</span><br><span class="line"><span class="attr">Fatal Python error: init_fs_encoding:</span> <span class="string">failed</span> <span class="string">to</span> <span class="string">get</span> <span class="string">the</span> <span class="string">Python</span> <span class="string">codec</span> <span class="string">of</span> <span class="string">the</span> <span class="string">filesystem</span> <span class="string">encoding</span></span><br><span class="line"><span class="attr">Python runtime state:</span> <span class="string">core</span> <span class="string">initialized</span></span><br><span class="line"><span class="attr">ModuleNotFoundError:</span> <span class="literal">No</span> <span class="string">module</span> <span class="string">named</span> <span class="string">&#x27;encodings&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="string">Current</span> <span class="string">thread</span> <span class="number">0x00008bd8</span> <span class="string">(most</span> <span class="string">recent</span> <span class="string">call</span> <span class="string">first):</span></span><br><span class="line"><span class="string">&lt;no</span> <span class="string">Python</span> <span class="string">frame&gt;</span></span><br></pre></td></tr></table></figure>
-<p><font color='blue'><strong>出现这个问题的原因是我将直接安装的python换成了Anaconda的python</strong></font></p>
-<p>把PYTHONHOME 和 PYTHONPATH改成conda的目录，然后重启电脑就好了。<br><img src="https://tva1.sinaimg.cn/large/007uCyKMgy1gz1i95p18yj30qy0pfn0j.jpg"></p>
+        <p>在使用<code>vim</code>的时候出现了这个问题，具体错误信息如下： <span id="more"></span> <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">Python path configuration:</span></span><br><span class="line">  <span class="string">PYTHONHOME</span> <span class="string">=</span> <span class="string">(no</span> <span class="string">set)</span></span><br><span class="line">  <span class="string">PYTHONPATH</span> <span class="string">=</span> <span class="string">(no</span> <span class="string">set)</span></span><br><span class="line">  <span class="string">program</span> <span class="string">name</span> <span class="string">=</span> <span class="string">&#x27;D:\Python38\python.exe&#x27;</span></span><br><span class="line">  <span class="string">isolated</span> <span class="string">=</span> <span class="number">0</span></span><br><span class="line">  <span class="string">environment</span> <span class="string">=</span> <span class="number">1</span></span><br><span class="line">  <span class="string">user</span> <span class="string">site</span> <span class="string">=</span> <span class="number">1</span></span><br><span class="line">  <span class="string">import</span> <span class="string">site</span> <span class="string">=</span> <span class="number">1</span></span><br><span class="line">  <span class="string">sys._base_executable</span> <span class="string">=</span> <span class="string">&#x27;D:\\Python38\\python.exe&#x27;</span></span><br><span class="line">  <span class="string">sys.base_prefix</span> <span class="string">=</span> <span class="string">&#x27;C:\\PythonHome&#x27;</span></span><br><span class="line">  <span class="string">sys.base_exec_prefix</span> <span class="string">=</span> <span class="string">&#x27;C:\\PythonHome&#x27;</span></span><br><span class="line">  <span class="string">sys.executable</span> <span class="string">=</span> <span class="string">&#x27;D:\\Python38\\python.exe&#x27;</span></span><br><span class="line">  <span class="string">sys.prefix</span> <span class="string">=</span> <span class="string">&#x27;C:\\PythonHome&#x27;</span></span><br><span class="line">  <span class="string">sys.exec_prefix</span> <span class="string">=</span> <span class="string">&#x27;C:\\PythonHome&#x27;</span></span><br><span class="line">  <span class="string">sys.path</span> <span class="string">=</span> [</span><br><span class="line">    <span class="string">&#x27;C:\\PythonPath&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;D:\\Python38\\python38.zip&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;C:\\PythonHome\\DLLs&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;C:\\PythonHome\\lib&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;D:\\Python38&#x27;</span>,</span><br><span class="line">  ]</span><br><span class="line"><span class="attr">Fatal Python error: init_fs_encoding:</span> <span class="string">failed</span> <span class="string">to</span> <span class="string">get</span> <span class="string">the</span> <span class="string">Python</span> <span class="string">codec</span> <span class="string">of</span> <span class="string">the</span> <span class="string">filesystem</span> <span class="string">encoding</span></span><br><span class="line"><span class="attr">Python runtime state:</span> <span class="string">core</span> <span class="string">initialized</span></span><br><span class="line"><span class="attr">ModuleNotFoundError:</span> <span class="literal">No</span> <span class="string">module</span> <span class="string">named</span> <span class="string">&#x27;encodings&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="string">Current</span> <span class="string">thread</span> <span class="number">0x00008bd8</span> <span class="string">(most</span> <span class="string">recent</span> <span class="string">call</span> <span class="string">first):</span></span><br><span class="line"><span class="string">&lt;no</span> <span class="string">Python</span> <span class="string">frame&gt;</span></span><br></pre></td></tr></table></figure> <font color='blue'><strong>出现这个问题的原因是我将直接安装的python换成了Anaconda的python</strong></font></p>
+<p>把PYTHONHOME 和 PYTHONPATH改成conda的目录，然后重启电脑就好了。 <img src="https://tva1.sinaimg.cn/large/007uCyKMgy1gz1i95p18yj30qy0pfn0j.jpg" /></p>
 
     </div>
 
@@ -333,20 +323,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-count">27</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -434,6 +424,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

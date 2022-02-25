@@ -188,13 +188,6 @@
 
               <time title="创建时间：2022-02-04 15:26:02" itemprop="dateCreated datePublished" datetime="2022-02-04T15:26:02+08:00">2022-02-04</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-17 18:29:48" itemprop="dateModified" datetime="2022-02-17T18:29:48+08:00">2022-02-17</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -230,10 +223,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>在将单独的<code>python</code>环境换成<code>Anaconda</code>后打开vim出现了该错误，看错误提示是<code>vim</code>无法找到<code>python38.dll</code>，所以在_vimrc中加入</p>
-<span id="more"></span>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> pythonthreedll=D:\Anaconda3\python39.dll</span><br></pre></td></tr></table></figure>
-<p>即可。<br>如图<br><img src="https://tvax4.sinaimg.cn/large/007uCyKMgy1gz1ihxj3xuj30tj03jq37.jpg"></p>
+        <p>在将单独的<code>python</code>环境换成<code>Anaconda</code>后打开vim出现了该错误，看错误提示是<code>vim</code>无法找到<code>python38.dll</code>，所以在_vimrc中加入 <span id="more"></span> <figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> pythonthreedll=D:\Anaconda3\python39.dll</span><br></pre></td></tr></table></figure> 即可。 如图 <img src="https://tvax4.sinaimg.cn/large/007uCyKMgy1gz1ihxj3xuj30tj03jq37.jpg" /></p>
 
     </div>
 
@@ -332,20 +322,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-count">27</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -433,6 +423,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
