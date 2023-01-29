@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tal-tj.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Elisp基础语法 Elisp是Lisp的一个方言，全称是Emacs Lisp。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Elisp学习笔记">
+<meta property="og:url" content="https://tal-tj.github.io/posts/91232595.html">
+<meta property="og:site_name" content="TnoJ&#39;s Blog">
+<meta property="og:description" content="Elisp基础语法 Elisp是Lisp的一个方言，全称是Emacs Lisp。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-01-15T03:35:58.000Z">
+<meta property="article:modified_time" content="2023-01-15T13:38:21.259Z">
+<meta property="article:author" content="TnoJ">
+<meta property="article:tag" content="Elisp">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://tal-tj.github.io/posts/91232595.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Elisp学习笔记 | TnoJ's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">TnoJ's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/tal-tj" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tal-tj.github.io/posts/91232595.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="TnoJ">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TnoJ's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Elisp学习笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-01-15 11:35:58" itemprop="dateCreated datePublished" datetime="2023-01-15T11:35:58+08:00">2023-01-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Elisp/" itemprop="url" rel="index"><span itemprop="name">Elisp</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>10k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>9 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <!--Elisp学习笔记.md-->
+<h1 id="elisp基础语法">Elisp基础语法</h1>
+<p>Elisp是Lisp的一个方言，全称是Emacs Lisp。</p>
+<span id="more"></span>
+<h2 id="注释">注释</h2>
+<p>Elisp中使用分号进行注释</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">;; 分号是注释的开始</span></span><br></pre></td></tr></table></figure>
+<h2 id="执行代码">执行代码</h2>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">;; 这个表达式的意思是2+2</span></span><br><span class="line">(<span class="name">+</span> <span class="number">2</span> <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<p>在emacs中执行的方式有：</p>
+<ol type="1">
+<li>将光标移动到闭合的括号外，使用快捷键<code>C-x C-e</code>（eval-last-sexp），emacs就会执行该代码。</li>
+<li>选中一块代码，然后按快捷键<code>M-x</code>（eval-region）。</li>
+<li>输入<code>M-x ielm&lt;RET&gt;</code>，emacs会打开一个交互式的elisp命令窗口。</li>
+</ol>
+<h2 id="打印">打印</h2>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name">message</span> <span class="string">&quot;hello&quot;</span>)</span><br><span class="line">(<span class="name">message</span> <span class="string">&quot;hi, it&#x27;s %s&quot;</span> <span class="string">&quot;emacs&quot;</span>)</span><br><span class="line">(<span class="name">print</span> (<span class="name">format</span> <span class="string">&quot;hi, it&#x27;s %s&quot;</span> <span class="string">&quot;emacs&quot;</span>)) <span class="comment">; print会返回打印的object</span></span><br></pre></td></tr></table></figure>
+<p>这将输出到一个名为<code>*Messages*</code>的buffer中。你可以通过输入<code>C-h e</code>（view-echo-area-messages）来切换到那个buffer。</p>
+<h2 id="基础运算">基础运算</h2>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name">+</span> <span class="number">4</span> <span class="number">5</span> <span class="number">6</span>) <span class="comment">; 15</span></span><br><span class="line">(<span class="name">/</span> <span class="number">4</span> <span class="number">2</span>) <span class="comment">; 2</span></span><br><span class="line">(<span class="name">/</span> <span class="number">5</span> <span class="number">2</span>) <span class="comment">; 2</span></span><br><span class="line">(% <span class="number">10</span> <span class="number">3</span>) <span class="comment">; 1</span></span><br><span class="line"><span class="comment">;; 2 * (1 + 3) / 4</span></span><br><span class="line">(<span class="name">/</span> (<span class="name">*</span> (<span class="name">+</span> <span class="number">1</span> <span class="number">3</span>) <span class="number">2</span>) <span class="number">4</span>) <span class="comment">; 2</span></span><br></pre></td></tr></table></figure>
+<p><strong>注意</strong>
+：<code>2.</code>是整数，<code>2.0</code>才是浮点数。</p>
+<h2 id="断言">断言</h2>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name">integerp</span> <span class="number">3</span>.) <span class="comment">; t</span></span><br><span class="line">(<span class="name">floatp</span> <span class="number">2.0</span>) <span class="comment">; t</span></span><br></pre></td></tr></table></figure>
+<p>断言函数通常是以p结尾，表示其常常返回<code>t</code>或者<code>nil</code>，其中<code>t</code>表示<code>true</code>，<code>nil</code>表示<code>false</code>。</p>
+<h2 id="string与number转换">string与number转换</h2>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name">string-to-number</span> <span class="string">&quot;3&quot;</span>)</span><br><span class="line">(<span class="name">number-to-string</span> <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="bool函数">bool函数</h2>
+<p>在elisp中，空表<code>()</code>表示<code>nil</code>，其余的都表示<code>t</code>。</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">;; 布尔值比较</span></span><br><span class="line">(<span class="name">and</span> <span class="literal">nil</span> <span class="literal">t</span>) <span class="comment">; nil</span></span><br><span class="line">(<span class="name">and</span> <span class="literal">t</span> &#x27;()) <span class="comment">; nil</span></span><br><span class="line">(<span class="name">or</span> <span class="literal">nil</span> <span class="literal">t</span>) <span class="comment">; t</span></span><br><span class="line">(<span class="name">or</span> &#x27;() <span class="literal">nil</span>) <span class="comment">; nil</span></span><br><span class="line"><span class="comment">;; 数字比较</span></span><br><span class="line">(<span class="name">&gt;</span> <span class="number">3</span> <span class="number">4</span>) <span class="comment">; nil</span></span><br><span class="line">(<span class="name">&lt;</span> <span class="number">3</span> <span class="number">4</span>) <span class="comment">; t</span></span><br><span class="line">(<span class="name">=</span> <span class="number">3</span> <span class="number">4</span>) <span class="comment">; nil</span></span><br><span class="line"><span class="comment">;; /=表示不等，等同于python中的!=</span></span><br><span class="line">(<span class="name">/=</span> <span class="number">3</span> <span class="number">3</span>) <span class="comment">; nil</span></span><br><span class="line"><span class="comment">;; 字符串比较</span></span><br><span class="line">(<span class="name">equal</span> <span class="string">&quot;TnoJ&quot;</span> <span class="string">&quot;TnoJ&quot;</span>) <span class="comment">; t</span></span><br><span class="line">(<span class="name">equal</span> <span class="string">&quot;TnoJ&quot;</span> <span class="string">&quot;Tnoj&quot;</span>) <span class="comment">; nil</span></span><br><span class="line">(<span class="name">string-equal</span> <span class="string">&quot;TnoJ&quot;</span> <span class="string">&quot;TnoJ&quot;</span>) <span class="comment">; t</span></span><br><span class="line">(<span class="name">string-equal</span> <span class="string">&quot;TnoJ&quot;</span> &#x27;TnoJ) <span class="comment">; t</span></span><br></pre></td></tr></table></figure>
+<p><code>equal</code>是通用的比较，如果两个操作数是相同的类型并且是相同的值，才会输入<code>t</code>，否则输出<code>nil</code>。</p>
+<h2 id="变量">变量</h2>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">;; 全局变量</span></span><br><span class="line">(<span class="name">setq</span> x <span class="number">1</span>)</span><br><span class="line">(<span class="name">setq</span> a <span class="number">1</span> b <span class="number">2</span> c <span class="number">3</span>) <span class="comment">; a = 1, b = 2, c = 3</span></span><br><span class="line"></span><br><span class="line"><span class="comment">;; 局部变量</span></span><br><span class="line">(<span class="name">let</span> (<span class="name">var1</span> var2) body)</span><br><span class="line">(<span class="name">let</span> (<span class="name">a</span> b)</span><br><span class="line">	(<span class="name">setq</span> a <span class="number">1</span>)</span><br><span class="line">	(<span class="name">setq</span> b <span class="number">2</span>)</span><br><span class="line">	(<span class="name">+</span> a b)</span><br><span class="line">) <span class="comment">; return 3</span></span><br><span class="line"><span class="comment">;; 或者</span></span><br><span class="line">(<span class="name">let</span> ((<span class="name">var1</span> varVlue) (<span class="name">var2</span> varValue) ... ) body)</span><br><span class="line">(<span class="name">let</span> ((<span class="name">a</span> <span class="number">2</span>) (<span class="name">b</span> <span class="number">4</span>)) (<span class="name">+</span> a b)) <span class="comment">; 6</span></span><br></pre></td></tr></table></figure>
+<h2 id="条件语句">条件语句</h2>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name">if</span> test true_body)</span><br><span class="line">(<span class="name">if</span> test true_body false_body)</span><br><span class="line"></span><br><span class="line">(<span class="name">if</span> (<span class="name">&gt;</span> <span class="number">3</span> <span class="number">8</span>) <span class="number">1</span> <span class="number">2</span>) <span class="comment">; 2</span></span><br></pre></td></tr></table></figure>
+<h2 id="表达式块">表达式块</h2>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name">progn</span> (<span class="name">message</span> <span class="string">&quot;a&quot;</span>) (<span class="name">message</span> <span class="string">&quot;b&quot;</span>))</span><br><span class="line"><span class="comment">;; 等同于</span></span><br><span class="line">(<span class="name">message</span> <span class="string">&quot;a&quot;</span>)</span><br><span class="line">(<span class="name">message</span> <span class="string">&quot;b&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>类似于c中的<code>&#123;...&#125;</code>，<code>progn</code>返回的是最后一个表达式的值。</p>
+<h2 id="循环语句">循环语句</h2>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name">while</span> test body)</span><br><span class="line"></span><br><span class="line">(<span class="name">setq</span> x <span class="number">0</span>)</span><br><span class="line">(<span class="name">while</span> (<span class="name">&lt;</span> x <span class="number">4</span>)</span><br><span class="line">       (<span class="name">message</span> <span class="string">&quot;Hello TnoJ&quot;</span>)</span><br><span class="line">	   (<span class="name">setq</span> x (<span class="number">1</span>+ x)))</span><br></pre></td></tr></table></figure>
+<h2 id="定义一个函数function">定义一个函数（function）</h2>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name">defun</span> function_name (<span class="name">p1</span> p2 ...)</span><br><span class="line">       <span class="string">&quot;doc_string&quot;</span></span><br><span class="line">	   body)</span><br><span class="line"></span><br><span class="line">(<span class="name">defun</span> add_one (<span class="name">x</span>)</span><br><span class="line">       <span class="string">&quot;This funtion is to add one&quot;</span></span><br><span class="line">	   (<span class="name">+</span> x <span class="number">1</span>))</span><br><span class="line"><span class="comment">;; lambda函数</span></span><br><span class="line">(<span class="name">lambda</span> (<span class="name">x</span> y)</span><br><span class="line">        (<span class="name">+</span> x y))</span><br><span class="line"><span class="comment">;; lambda直接调用</span></span><br><span class="line">((<span class="name">lambda</span> (<span class="name">x</span> y)</span><br><span class="line">         (<span class="name">+</span> x y))</span><br><span class="line">	 <span class="number">9</span> <span class="number">10</span>)</span><br><span class="line"><span class="comment">;; return 19</span></span><br></pre></td></tr></table></figure>
+<h2 id="定义一个命令command">定义一个命令（command）</h2>
+<p>command是可以被用户使用<code>M-x</code>来调用的。</p>
+<p>通过添加<code>(interactive)</code>到<code>doc_string</code>后面，可以使得function变为command。</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name">defun</span> hello ()</span><br><span class="line">       <span class="string">&quot;insert hello at current position&quot;</span></span><br><span class="line">	   (<span class="name">interactive</span>)</span><br><span class="line">	   (<span class="name">insert</span> <span class="string">&quot;hello&quot;</span>))</span><br><span class="line"><span class="comment">;; 下面是一个command的定义的模板</span></span><br><span class="line">(<span class="name">defun</span> myCommand ()</span><br><span class="line">  <span class="string">&quot;One sentence summary of what this command do.</span></span><br><span class="line"><span class="string">More detailed documentation here.&quot;</span></span><br><span class="line">  (<span class="name">interactive</span>)</span><br><span class="line">  (<span class="name">let</span> (<span class="name">localVar1</span> localVar2 …)</span><br><span class="line">    <span class="comment">; do something here …</span></span><br><span class="line">    <span class="comment">; …</span></span><br><span class="line">    <span class="comment">; last expression is returned</span></span><br><span class="line">  )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h1 id="elisp的文本处理">Elisp的文本处理</h1>
+<h2 id="获取光标的位置">获取光标的位置</h2>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name">point</span>)                   <span class="comment">; 返回当前光标的位置</span></span><br><span class="line">(<span class="name">region-beginning</span>)        <span class="comment">; 返回当前区域的开头</span></span><br><span class="line">(<span class="name">region-end</span>)              <span class="comment">; 返回当前区域的结尾</span></span><br><span class="line">(<span class="name">line-beginning-position</span>) <span class="comment">; 返回当前行的开头</span></span><br><span class="line">(<span class="name">line-end-position</span>)       <span class="comment">; 返回当前行的结尾</span></span><br><span class="line">(<span class="name">point-min</span>)               <span class="comment">; 返回当前buffer的开头</span></span><br><span class="line">(<span class="name">point-max</span>)               <span class="comment">; 返回当前buffer的结尾</span></span><br></pre></td></tr></table></figure>
+<h2 id="移动光标">移动光标</h2>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name">goto-char</span> <span class="number">17</span>)</span><br><span class="line"></span><br><span class="line">(<span class="name">forward-char</span> <span class="number">2</span>)</span><br><span class="line">(<span class="name">backward-char</span> <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">; 文本搜索</span></span><br><span class="line">(<span class="name">search-forward</span> <span class="string">&quot;some&quot;</span>)</span><br><span class="line">(<span class="name">search-backward</span> <span class="string">&quot;some&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">; 正则搜索</span></span><br><span class="line">(<span class="name">re-search-forward</span> <span class="string">&quot;[0-9]&quot;</span>)</span><br><span class="line">(<span class="name">re-search-backward</span> <span class="string">&quot;[0-9]&quot;</span>)</span><br><span class="line"></span><br><span class="line">(<span class="name">skip-chars-forward</span> <span class="string">&quot;a-z&quot;</span>)</span><br><span class="line">(<span class="name">skip-chars-backward</span> <span class="string">&quot;a-z&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="增删改">增/删/改</h2>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name">delete-char</span> <span class="number">9</span>)</span><br><span class="line">(<span class="name">delete-region</span> <span class="number">3</span> <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">(<span class="name">insert</span> <span class="string">&quot;hello&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">;获取从光标位置 71~300 之间的字符串</span></span><br><span class="line">(<span class="name">setq</span> x (<span class="name">buffer-substring</span> <span class="number">71</span> <span class="number">300</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">; 将位置  71~3000 之间的字符串转换为大写</span></span><br><span class="line">(<span class="name">capitalize-region</span> <span class="number">71</span> <span class="number">300</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="string">string</h2>
+<p>在emacs中字符串是一个有序的字符数组。在emacs中，一个字符就是一个整数，<code>?a</code>表示<code>'a'</code>。</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name">message</span> (<span class="name">format</span> <span class="string">&quot;%d&quot;</span> ?a)) <span class="comment">; &quot;97&quot;</span></span><br><span class="line">(<span class="name">message</span> (<span class="name">format</span> <span class="string">&quot;%d&quot;</span> ?你)) <span class="comment">; &quot;20320&quot;</span></span><br><span class="line">(<span class="name">message</span> (<span class="name">format</span> <span class="string">&quot;%c&quot;</span> <span class="number">20320</span>)) <span class="comment">; &quot;你&quot;</span></span><br><span class="line"></span><br><span class="line">(<span class="name">make-string</span> <span class="number">5</span> ?x) <span class="comment">; &quot;xxxxx&quot;&quot;</span></span><br><span class="line">(<span class="name">string</span> ?a ?b ?c) <span class="comment">; &quot;abc&quot;</span></span><br><span class="line">(<span class="name">concat</span> &#x27;(?a ?b ?c ?d ?e)) <span class="comment">; &quot;abcde&quot;</span></span><br><span class="line">(<span class="name">concat</span> [?a ?b ?c ?d ?e])  <span class="comment">; &quot;abcde&quot;</span></span><br><span class="line">(<span class="name">vconcat</span> <span class="string">&quot;abcde&quot;</span>)          <span class="comment">; [97 98 99 100 101]</span></span><br><span class="line"></span><br><span class="line">(<span class="name">length</span> <span class="string">&quot;abc&quot;</span>)</span><br><span class="line"></span><br><span class="line">(<span class="name">substring</span> <span class="string">&quot;abcdefg&quot;</span> <span class="number">3</span> <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line">(<span class="name">replace-regexp-in-string</span> <span class="string">&quot;[0-9]&quot;</span> <span class="string">&quot;X&quot;</span> <span class="string">&quot;abc123&quot;</span>)<span class="comment">;; returns abcXXX</span></span><br></pre></td></tr></table></figure>
+<h2 id="buffer">buffer</h2>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name">buffer-name</span>)</span><br><span class="line"></span><br><span class="line">(<span class="name">buffer-file-name</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">;切换到名为 xyz 的 buffer</span></span><br><span class="line">(<span class="name">set-buffer</span> <span class="string">&quot;xyz&quot;</span>)</span><br><span class="line"></span><br><span class="line">(<span class="name">save-buffer</span>)</span><br><span class="line"></span><br><span class="line">(<span class="name">kill-buffer</span> <span class="string">&quot;xyz&quot;</span>)</span><br><span class="line"><span class="comment">; 临时设置一个 buffer 为当前 buffer 来工作.</span></span><br><span class="line"></span><br><span class="line">(<span class="name">with-current-buffer</span> <span class="string">&quot;xyz&quot;</span></span><br><span class="line">	<span class="comment">;; do something</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h2 id="file">file</h2>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">; 打开一个文件</span></span><br><span class="line">(<span class="name">find-file</span> <span class="string">&quot;~/&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">; 等同 save as</span></span><br><span class="line">(<span class="name">write-file</span> path)</span><br><span class="line"></span><br><span class="line"><span class="comment">; 将文件的内容插入到当前位置</span></span><br><span class="line">(<span class="name">insert-file-contents</span> path)</span><br><span class="line"></span><br><span class="line"><span class="comment">; 追加一个文本块到文件</span></span><br><span class="line">(<span class="name">append-to-file</span> start-pos end-pos path)</span><br><span class="line"></span><br><span class="line">(<span class="name">rename-file</span> file-name new-name)</span><br><span class="line"></span><br><span class="line">(<span class="name">copy-file</span> old-name new-name)</span><br><span class="line"></span><br><span class="line">(<span class="name">delete-file</span> file-name)</span><br><span class="line"></span><br><span class="line"><span class="comment">; dir path</span></span><br><span class="line">(<span class="name">file-name-directory</span> full-path)</span><br><span class="line"></span><br><span class="line"><span class="comment">; filename part</span></span><br><span class="line">(<span class="name">file-name-nondirectory</span> full-path)</span><br><span class="line"></span><br><span class="line">(<span class="name">file-name-extension</span> file-name)</span><br><span class="line"></span><br><span class="line">(<span class="name">file-name-sans-extension</span> file-name)</span><br></pre></td></tr></table></figure>
+<h1 id="获取字符串">获取字符串</h1>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">; 返回当前光标所在的单词内容</span></span><br><span class="line">(<span class="name">thing-at-point</span> &#x27;word)</span><br><span class="line"></span><br><span class="line"><span class="comment">; 返回当前光标所在的单词带有连字符或下划线的内容</span></span><br><span class="line">(<span class="name">thing-at-point</span> &#x27;symbol)</span><br><span class="line"></span><br><span class="line"><span class="comment">; 返回当前光标所在的行内容</span></span><br><span class="line">(<span class="name">thing-at-point</span> &#x27;line)</span><br><span class="line"></span><br><span class="line"><span class="comment">; 返回当前光标所在单词的开始和结束位置</span></span><br><span class="line">(<span class="name">bounds-of-thing-at-point</span> &#x27;word)</span><br></pre></td></tr></table></figure>
+<h1 id="shell中执行elisp">shell中执行elisp</h1>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">emacs --script my_script.el</span><br></pre></td></tr></table></figure>
+<p>命令行参数会保存在elisp的一个内部变量<code>argv</code>中，它是一个list。</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name">message</span> <span class="string">&quot;argv 0: %s&quot;</span> (<span class="name">elt</span> argv <span class="number">0</span>)) <span class="comment">; %s is for string</span></span><br><span class="line">(<span class="name">message</span> <span class="string">&quot;argv 1: %s&quot;</span> (<span class="name">elt</span> argv <span class="number">1</span>))</span><br><span class="line">(<span class="name">message</span> <span class="string">&quot;argv 2: %s&quot;</span> (<span class="name">elt</span> argv <span class="number">2</span>))</span><br><span class="line">(<span class="name">message</span> <span class="string">&quot;argv 3: %s&quot;</span> (<span class="name">elt</span> argv <span class="number">3</span>))</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">emacs --script test.el uni 2 -tri</span><br><span class="line"></span><br><span class="line">argv 0: &quot;uni&quot;</span><br><span class="line">argv 1: &quot;2&quot;</span><br><span class="line">argv 2: &quot;-tri&quot;</span><br><span class="line">argv 3: ni</span><br></pre></td></tr></table></figure>
+<h1 id="emacs中的基础数据结构">emacs中的基础数据结构</h1>
+<p>elisp中最重要的是类似于list的数据类型</p>
+<pre class="mermaid">graph TD
+S[Sequence--非实际数据类型]--包含-->List
+S[Sequence--非实际数据类型]--包含-->A[Array--非实际数据类型]
+List--包含-->AL[Associae List]
+List--包含-->PL[Property List]
+A[Array--非实际数据类型]--包含-->Vector
+A[Array--非实际数据类型]--包含-->String</pre>
+<h2 id="vector">vector</h2>
+<ol type="1">
+<li>读写元素是常量时间</li>
+<li>元素可以是任意类型</li>
+<li>元素不能被添加或删除. 即 vector 的长度是固定的.</li>
+<li>元素的值可以被修改</li>
+</ol>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name">setq</span> v (<span class="name">vector</span> <span class="number">3</span> <span class="number">4</span> <span class="number">5</span>))</span><br><span class="line"></span><br><span class="line">(<span class="name">setq</span> x <span class="number">7</span>)</span><br><span class="line">(<span class="name">setq</span> v (<span class="name">vector</span> <span class="number">3</span> x <span class="number">5</span>))</span><br><span class="line"><span class="comment">;; v = [3 7 5]</span></span><br><span class="line"><span class="comment">;; 其中x会被解释成7，如不想解释x，那么可以使用</span></span><br><span class="line">(<span class="name">setq</span> v [<span class="number">3</span> x <span class="number">5</span>]) <span class="comment">; v = [3 x 7]</span></span><br><span class="line"><span class="comment">;; 其中x没有被解释</span></span><br><span class="line"></span><br><span class="line">(<span class="name">aref</span> array n) <span class="comment">;返回 array 数组在索引为 n 的元素</span></span><br><span class="line">(<span class="name">elt</span> sequence n) <span class="comment">;返回 sequence 在索引为 n 的元素.</span></span><br><span class="line"></span><br><span class="line">(<span class="name">aref</span> [<span class="string">&quot;a&quot;</span> <span class="string">&quot;b&quot;</span> <span class="string">&quot;c&quot;</span>] <span class="number">0</span>) <span class="comment">;  &quot;a&quot;</span></span><br><span class="line">(<span class="name">elt</span> [<span class="string">&quot;a&quot;</span> <span class="string">&quot;b&quot;</span> <span class="string">&quot;c&quot;</span>] <span class="number">0</span>) <span class="comment">;  &quot;a&quot;</span></span><br><span class="line"><span class="comment">;; elt 是更通用的用法, 它可以同时用于 vector 和 list.</span></span><br><span class="line"></span><br><span class="line">(<span class="name">setq</span> v [<span class="number">1</span> <span class="number">2</span> <span class="number">3</span>])</span><br><span class="line">(<span class="name">aset</span> v <span class="number">0</span> <span class="string">&quot;b&quot;</span>)</span><br><span class="line"><span class="comment">;; v = [&quot;b&quot; 2 3]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">;; list转换为vector</span></span><br><span class="line">(<span class="name">vconcat</span> [<span class="number">3</span> <span class="number">4</span>] [<span class="string">&quot;a&quot;</span> <span class="string">&quot;b&quot;</span>]) <span class="comment">; [3 4 &quot;a&quot; &quot;b&quot;]</span></span><br><span class="line">(<span class="name">vconcat</span> [<span class="number">3</span> <span class="number">4</span>] &#x27;(<span class="string">&quot;a&quot;</span> <span class="string">&quot;b&quot;</span>)) <span class="comment">; [3 4 &quot;a&quot; &quot;b&quot;]</span></span><br><span class="line">(<span class="name">vconcat</span> [<span class="number">3</span> <span class="number">4</span>] <span class="string">&quot;ab&quot;</span>) <span class="comment">; [3 4 97 98]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">;; vector转为list</span></span><br><span class="line">(<span class="name">append</span> [<span class="number">1</span> <span class="number">2</span> <span class="number">3</span>] [<span class="number">4</span> <span class="number">5</span>] <span class="literal">nil</span>) <span class="comment">; (1 2 3 4 5)</span></span><br><span class="line"><span class="comment">;; 注意，当append最后一个不是列表时，将不会返回列表</span></span><br><span class="line">(<span class="name">append</span> [<span class="number">1</span> <span class="number">2</span> <span class="number">3</span>] [<span class="number">4</span> <span class="number">5</span>]) <span class="comment">; (1 2 3 . [4 5])</span></span><br></pre></td></tr></table></figure>
+<h2 id="list">list</h2>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">;; 创建list (list var1 var2 ... )</span></span><br><span class="line"><span class="comment">;; 或者 &#x27;(var1 var2)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">;; 数字list</span></span><br><span class="line">(<span class="name">number-sequence</span> n m step)</span><br><span class="line">(<span class="name">number-sequence</span> n m) </span><br><span class="line">(<span class="name">number-sequence</span> n)</span><br><span class="line"></span><br><span class="line">(<span class="name">length</span> list)</span><br><span class="line"></span><br><span class="line">(<span class="name">car</span> list)	        <span class="comment">;first element</span></span><br><span class="line">(<span class="name">nth</span> n list)	    <span class="comment">;nth element</span></span><br><span class="line">(<span class="name">car</span> (<span class="name">last</span> list))	<span class="comment">;last element</span></span><br><span class="line">(<span class="name">cdr</span> list)	        <span class="comment">;2nd to last elements.</span></span><br><span class="line">(<span class="name">nthcdr</span> n list)	    <span class="comment">;nth to last elements.</span></span><br><span class="line">(<span class="name">butlast</span> list n)	<span class="comment">;without the last n elements.</span></span><br><span class="line"></span><br><span class="line"><span class="comment">;; 向前追加list</span></span><br><span class="line">(<span class="name">cons</span> x list)	<span class="comment">;Return a new list, with x added to front. (prepend)</span></span><br><span class="line"><span class="comment">;; 向后追加list</span></span><br><span class="line">(<span class="name">cons</span> x list)	<span class="comment">;Return a new list, with x added to front. (prepend)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">;; 修改list</span></span><br><span class="line">(<span class="name">push</span> list)         <span class="comment">;Add a element to the front variable. Returns the new list.</span></span><br><span class="line">(<span class="name">pop</span> list)	        <span class="comment">;Remove first element from the variable. Returns the removed element.</span></span><br><span class="line">(<span class="name">nbutlast</span> list n)	<span class="comment">;Remove last n elements from the variable. Returns the new value of the variable.</span></span><br><span class="line">(<span class="name">setcar</span> list x)	    <span class="comment">;replaces the first element in list with x. Returns x.</span></span><br><span class="line">(<span class="name">setcdr</span> list x)	    <span class="comment">;replaces the rest of elements in list with x. Returns x.</span></span><br><span class="line"></span><br><span class="line"><span class="comment">;; list转换string</span></span><br><span class="line">(<span class="name">mapconcat</span> &#x27;identity &#x27;(<span class="string">&quot;ab&quot;</span> <span class="string">&quot;cd&quot;</span> <span class="string">&quot;ef&quot;</span>) <span class="string">&quot;,&quot;</span>) <span class="comment">;; &quot;ab,cd,ef&quot;</span></span><br><span class="line">(<span class="name">format</span> <span class="string">&quot;%s&quot;</span> &#x27;(<span class="number">1</span> <span class="string">&quot;two&quot;</span> <span class="number">3</span>))                  <span class="comment">;; &quot;(1 two 3)&quot;</span></span><br><span class="line">(<span class="name">substring</span> (<span class="name">format</span> <span class="string">&quot;%s&quot;</span> &#x27;(<span class="number">1</span> <span class="string">&quot;two&quot;</span> <span class="number">3</span>)) <span class="number">1</span> <span class="number">-1</span>) <span class="comment">;; &quot;1 two 3&quot;</span></span><br></pre></td></tr></table></figure>
+<h3 id="associate-list">Associate List</h3>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">;; (cons key value)</span></span><br><span class="line"><span class="comment">;; 也可以写成(key . value)</span></span><br><span class="line"><span class="comment">;; key, value 都可以是任意类型</span></span><br><span class="line"><span class="comment">;; 可以有重复的key，因为它是按顺序来维护的</span></span><br><span class="line"></span><br><span class="line">(<span class="name">setq</span> x</span><br><span class="line">      &#x27;((<span class="string">&quot;mary&quot;</span> . <span class="number">23</span>)</span><br><span class="line">        (<span class="string">&quot;john&quot;</span> . <span class="number">24</span>)</span><br><span class="line">        (<span class="string">&quot;smith&quot;</span> . <span class="number">33</span>)))</span><br><span class="line">		</span><br><span class="line"><span class="comment">;; 通过key获取键值对</span></span><br><span class="line">(<span class="name">assoc</span> <span class="string">&quot;john&quot;</span> x) <span class="comment">; (&quot;john&quot; . 24)</span></span><br><span class="line"><span class="comment">;; 通过value获取键值对</span></span><br><span class="line">(<span class="name">rassoc</span> <span class="number">24</span> x) <span class="comment">; (&quot;john&quot; . 24)</span></span><br></pre></td></tr></table></figure>
+<h3 id="property-list">Property List</h3>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">;; &#x27;(key1 val1 key2 val2 ...)</span></span><br><span class="line"><span class="comment">;; 它通常用于小于50个元素的键值对.它与alist的函数一样。如果超过100个元素，则建议使用alist。</span></span><br><span class="line"></span><br><span class="line">(<span class="name">plist-get</span> &#x27;(x <span class="number">1</span> y <span class="number">2</span>) &#x27;y) <span class="comment">; 2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">;; non existent key returns nil</span></span><br><span class="line">(<span class="name">plist-get</span> &#x27;(x <span class="number">1</span> y <span class="number">2</span>) &#x27;b) <span class="comment">; nil</span></span><br><span class="line"></span><br><span class="line">(<span class="name">setq</span> xx &#x27;(a <span class="number">1</span> b <span class="number">2</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">;; set value to a existing key</span></span><br><span class="line">(<span class="name">setq</span> xx (<span class="name">plist-put</span> xx &#x27;b <span class="number">3</span>))</span><br><span class="line">	  </span><br><span class="line"><span class="comment">;; must use setq, because plist-put works by return value</span></span><br><span class="line">(<span class="name">plist-get</span> xx &#x27;b) <span class="comment">; 3</span></span><br><span class="line"></span><br><span class="line"><span class="comment">;; set value to new key</span></span><br><span class="line">(<span class="name">setq</span> xx (<span class="name">plist-put</span> xx &#x27;d <span class="number">3</span>))</span><br><span class="line">	  </span><br><span class="line">(<span class="name">plist-get</span> xx &#x27;d) <span class="comment">; 3</span></span><br><span class="line"></span><br><span class="line"><span class="comment">;; check if a key exist</span></span><br><span class="line">(<span class="name">plist-member</span> xx &#x27;b)</span><br></pre></td></tr></table></figure>
+<h2 id="map">map</h2>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">;; (mapcar FUNCTION SEQUENCE)</span></span><br><span class="line"><span class="comment">;; 会将函数 FUNCTION 应用到 SEQUENCE 中的每一个元素, 然后返回一个 list 的结果.</span></span><br><span class="line">(<span class="name">mapcar</span> &#x27;<span class="number">1</span>+ [<span class="number">3</span> <span class="number">4</span> <span class="number">5</span>] ) <span class="comment">; (4 5 6)</span></span><br><span class="line">(<span class="name">mapcar</span> &#x27;<span class="number">1</span>+ &#x27;(<span class="number">3</span> <span class="number">4</span> <span class="number">5</span>)) <span class="comment">; (4 5 6)</span></span><br><span class="line"></span><br><span class="line">(<span class="name">mapcar</span></span><br><span class="line"> (<span class="name">lambda</span> (<span class="name">x</span>) (<span class="name">elt</span> x <span class="number">0</span>))</span><br><span class="line"> [[<span class="number">1</span> <span class="number">2</span>] [<span class="number">3</span> <span class="number">4</span>]] ) <span class="comment">; (1 3)</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">;; mapc类似于mapcar，但是返回值为nil</span></span><br></pre></td></tr></table></figure>
+<h2 id="loop-list">loop list</h2>
+<h3 id="dolist">dolist</h3>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">;; (dolist (var list [result]) body)</span></span><br><span class="line"><span class="comment">;; 循环处理list，var表示list中的元素，在body中处理，返回值result或者nil（result被省略时）</span></span><br><span class="line">(<span class="name">let</span> (</span><br><span class="line">  (<span class="name">xlist</span> (<span class="name">number-sequence</span> <span class="number">97</span> <span class="number">122</span>)) <span class="comment">;; list 97 to 122</span></span><br><span class="line">      )</span><br><span class="line">  (<span class="name">dolist</span> (<span class="name">n</span> xlist) (<span class="name">insert</span> n)))</span><br></pre></td></tr></table></figure>
+<h3 id="dotimes">dotimes</h3>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">;; (dotimes (var count [result]) body)</span></span><br><span class="line"><span class="comment">;; 返回值为result或者nil（result被省略时），其中var是从0到count的之间的步进数，包括0，但是小于count。</span></span><br><span class="line"><span class="comment">;; 类似python中的for var in range(count)</span></span><br><span class="line">(<span class="name">dotimes</span> (<span class="name">i</span> <span class="number">4</span>)</span><br><span class="line">  (<span class="name">insert</span> (<span class="name">number-to-string</span> i)))</span><br></pre></td></tr></table></figure>
+<h2 id="filter">filter</h2>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">;; 要求25.1及其后版本</span></span><br><span class="line"></span><br><span class="line">(<span class="name">seq-filter</span> &#x27;numberp &#x27;(<span class="number">1</span> <span class="string">&quot;a&quot;</span> <span class="number">3</span>)) <span class="comment">;; (1 3)</span></span><br></pre></td></tr></table></figure>
+<h1 id="hash-table">hash table</h1>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">;; 创建</span></span><br><span class="line">(<span class="name">setq</span> myHash (<span class="name">make-hash-table</span> <span class="symbol">:test</span> &#x27;equal))</span><br><span class="line">(<span class="name">setq</span> myHash #s(<span class="name">hash-table</span></span><br><span class="line">    size <span class="number">30</span></span><br><span class="line">	test equal</span><br><span class="line">	data (</span><br><span class="line">	      <span class="string">&quot;aa&quot;</span> <span class="number">30</span></span><br><span class="line">		  <span class="string">&quot;bb&quot;</span> <span class="number">20</span></span><br><span class="line">		  <span class="string">&quot;cc&quot;</span> <span class="number">10</span>)))</span><br><span class="line"><span class="comment">;; key全是symbol或者全是int，那么test就使用eq，否则就使用equal</span></span><br><span class="line"></span><br><span class="line"><span class="comment">;; 添加</span></span><br><span class="line">(<span class="name">puthash</span> <span class="string">&quot;tnoj&quot;</span> <span class="number">22</span> myHash)</span><br><span class="line"></span><br><span class="line"><span class="comment">;; 删除</span></span><br><span class="line">(<span class="name">remhash</span> <span class="string">&quot;tnoj&quot;</span> myHash)</span><br><span class="line"></span><br><span class="line"><span class="comment">;; 获取</span></span><br><span class="line">(<span class="name">gethash</span> <span class="string">&quot;tnoj&quot;</span> myHash)</span><br><span class="line"></span><br><span class="line"><span class="comment">;; 计算长度</span></span><br><span class="line">(<span class="name">hash-table-count</span> myHash)</span><br><span class="line"></span><br><span class="line"><span class="comment">;; 删除所有元素</span></span><br><span class="line">(<span class="name">clrhash</span> myHash)</span><br><span class="line"></span><br><span class="line">(<span class="name">gethash</span> myKey myHash) <span class="comment">; 不存在则返回nil</span></span><br><span class="line"><span class="comment">;; 检测元素是否存在</span></span><br></pre></td></tr></table></figure>
+<h1 id="symbol">Symbol</h1>
+<p>Symbol的概念类似于其他编程语言的标识符，除了:</p>
+<ul>
+<li>lisp
+symbol可以持有未eval过的，只是表示自身的，一个内部名字。在这种意义下，它类似于string。</li>
+<li>lisp symbol可以储存超过一个的值。</li>
+</ul>
+<h2 id="symbol中的cell">symbol中的cell</h2>
+<p>每个symbol都拥有以下cell来储存值</p>
+<ul>
+<li>“print name” cell：一个字符串，与 symbol 字面值一样.
+它是自动设置的，不能被更改</li>
+<li>“value” cell：存储 symbol 的值，当该 cell 不为空时，该 symbol
+被视为一个变量</li>
+<li>“function” cell：存储函数定义的对象，Lisp 宏 macros，或其他可以像
+function 那样执行的对象</li>
+<li>“property list” cell：持有一个 name/value 对的list. 用于存储 symbol
+的元数据，例如：函数的状态，字体规则(用于语法高亮)，是否废弃等</li>
+</ul>
+<p>function cell或者value
+cell可能为空，这时symbol被称为void，当你获取一个cell的value是void时，会产生一个lisp的错误。（一个空的empty
+cell与一个value为nil的cell是不同的）。</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">;; get symbol&#x27;s name cell value</span></span><br><span class="line">(<span class="name">symbol-name</span> &#x27;sin) <span class="comment">; &quot;sin&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">;; get symbol&#x27;s value cell value</span></span><br><span class="line">(<span class="name">symbol-value</span> &#x27;sin) <span class="comment">; void-variable error</span></span><br><span class="line"><span class="comment">;; because the value cell of the symbol sin is void</span></span><br><span class="line"><span class="comment">;; or, we just say that sin isn&#x27;t a variable</span></span><br><span class="line"></span><br><span class="line"><span class="comment">;; get symbol&#x27;s function cell value</span></span><br><span class="line">(<span class="name">symbol-function</span> &#x27;sin) <span class="comment">;#&lt;subr sin&gt;</span></span><br><span class="line"><span class="comment">;; the value is a primitive function (written in C), and has print form of #&lt;subr sin&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">;; get symbol&#x27;s property list cell value</span></span><br><span class="line">(<span class="name">symbol-plist</span> &#x27;sin) <span class="comment">; (side-effect-free t)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">;; 判断一个值是否为symbol</span></span><br><span class="line">(<span class="name">setq</span> x1 <span class="number">123</span> )</span><br><span class="line">(<span class="name">symbolp</span> x1) <span class="comment">; nil</span></span><br><span class="line"><span class="comment">;; nil, because x1 is evaluated, and that value is 123, not a symbol</span></span><br><span class="line">(<span class="name">symbolp</span> &#x27;x1) <span class="comment">; t</span></span><br><span class="line"></span><br><span class="line"><span class="comment">;; 设置value cell</span></span><br><span class="line">(<span class="name">setq</span> a <span class="string">&quot;a&quot;</span>)</span><br><span class="line">(<span class="name">symbol-value</span> &#x27;a) <span class="comment">; &quot;a&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">;; 检查value cell</span></span><br><span class="line">(<span class="name">boundp</span> &#x27;p) <span class="comment">; nil</span></span><br><span class="line">(<span class="name">setq</span> p <span class="string">&quot;p&quot;</span>)</span><br><span class="line">(<span class="name">boundp</span> &#x27;p) <span class="comment">; t</span></span><br><span class="line"></span><br><span class="line"><span class="comment">;; 设置funtion cell</span></span><br><span class="line">(<span class="name">defun</span> f () <span class="number">1</span>)</span><br><span class="line">(<span class="name">symbol-function</span> &#x27;f) <span class="comment">; (lambda nil 1)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">;; 检查function</span></span><br><span class="line">(<span class="name">fboundp</span> &#x27;fu) <span class="comment">; nil</span></span><br><span class="line">(<span class="name">defun</span> fu () <span class="number">1</span>)</span><br><span class="line">(<span class="name">fboundp</span> &#x27;fu) <span class="comment">; t</span></span><br><span class="line"></span><br><span class="line"><span class="comment">;; 设置symbol property list</span></span><br><span class="line">(<span class="name">put</span> &#x27;a &#x27;b <span class="number">5</span>) <span class="comment">; &#x27;a中的plist为&#x27;b 5</span></span><br><span class="line">(<span class="name">setplist</span> &#x27;a &#x27;(b <span class="number">1</span> c <span class="number">2</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">;; 获取symbol property list</span></span><br><span class="line">(<span class="name">get</span> &#x27;f &#x27;a) <span class="comment">; nil</span></span><br><span class="line">(<span class="name">symbol-plist</span> &#x27;a) <span class="comment">; (b 1 c 2)</span></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Elisp/" rel="tag"><i class="fa fa-tag"></i> Elisp</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/25fa43cc.html" rel="prev" title="markdown表格中输入'|'">
+      <i class="fa fa-chevron-left"></i> markdown表格中输入'|'
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/posts/286241c3.html" rel="next" title="光和偏振光">
+      光和偏振光 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#elisp%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">Elisp基础语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E9%87%8A"><span class="nav-number">1.1.</span> <span class="nav-text">注释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E4%BB%A3%E7%A0%81"><span class="nav-number">1.2.</span> <span class="nav-text">执行代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93%E5%8D%B0"><span class="nav-number">1.3.</span> <span class="nav-text">打印</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E8%BF%90%E7%AE%97"><span class="nav-number">1.4.</span> <span class="nav-text">基础运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%AD%E8%A8%80"><span class="nav-number">1.5.</span> <span class="nav-text">断言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#string%E4%B8%8Enumber%E8%BD%AC%E6%8D%A2"><span class="nav-number">1.6.</span> <span class="nav-text">string与number转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bool%E5%87%BD%E6%95%B0"><span class="nav-number">1.7.</span> <span class="nav-text">bool函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E9%87%8F"><span class="nav-number">1.8.</span> <span class="nav-text">变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6%E8%AF%AD%E5%8F%A5"><span class="nav-number">1.9.</span> <span class="nav-text">条件语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%9D%97"><span class="nav-number">1.10.</span> <span class="nav-text">表达式块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5"><span class="nav-number">1.11.</span> <span class="nav-text">循环语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E5%87%BD%E6%95%B0function"><span class="nav-number">1.12.</span> <span class="nav-text">定义一个函数（function）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E5%91%BD%E4%BB%A4command"><span class="nav-number">1.13.</span> <span class="nav-text">定义一个命令（command）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#elisp%E7%9A%84%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">Elisp的文本处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E5%85%89%E6%A0%87%E7%9A%84%E4%BD%8D%E7%BD%AE"><span class="nav-number">2.1.</span> <span class="nav-text">获取光标的位置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E5%85%89%E6%A0%87"><span class="nav-number">2.2.</span> <span class="nav-text">移动光标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A2%9E%E5%88%A0%E6%94%B9"><span class="nav-number">2.3.</span> <span class="nav-text">增&#x2F;删&#x2F;改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#string"><span class="nav-number">2.4.</span> <span class="nav-text">string</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#buffer"><span class="nav-number">2.5.</span> <span class="nav-text">buffer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#file"><span class="nav-number">2.6.</span> <span class="nav-text">file</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">3.</span> <span class="nav-text">获取字符串</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#shell%E4%B8%AD%E6%89%A7%E8%A1%8Celisp"><span class="nav-number">4.</span> <span class="nav-text">shell中执行elisp</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#emacs%E4%B8%AD%E7%9A%84%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">5.</span> <span class="nav-text">emacs中的基础数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#vector"><span class="nav-number">5.1.</span> <span class="nav-text">vector</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#list"><span class="nav-number">5.2.</span> <span class="nav-text">list</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#associate-list"><span class="nav-number">5.2.1.</span> <span class="nav-text">Associate List</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#property-list"><span class="nav-number">5.2.2.</span> <span class="nav-text">Property List</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#map"><span class="nav-number">5.3.</span> <span class="nav-text">map</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#loop-list"><span class="nav-number">5.4.</span> <span class="nav-text">loop list</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#dolist"><span class="nav-number">5.4.1.</span> <span class="nav-text">dolist</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dotimes"><span class="nav-number">5.4.2.</span> <span class="nav-text">dotimes</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#filter"><span class="nav-number">5.5.</span> <span class="nav-text">filter</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hash-table"><span class="nav-number">6.</span> <span class="nav-text">hash table</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#symbol"><span class="nav-number">7.</span> <span class="nav-text">Symbol</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#symbol%E4%B8%AD%E7%9A%84cell"><span class="nav-number">7.1.</span> <span class="nav-text">symbol中的cell</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">TnoJ</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">54</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">TnoJ</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : '[object Object]',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<!-- hexo injector body_end start --><script>for (i = 0; i < document.getElementsByTagName("img").length; i++){document.getElementsByTagName("img")[i].setAttribute("referrerpolice", "no-referrer");}</script><!-- hexo injector body_end end --></body>
+</html>

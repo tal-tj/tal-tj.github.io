@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tal-tj.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Unit 1 What are polymer?">
+<meta property="og:type" content="article">
+<meta property="og:title" content="What are polymer翻译">
+<meta property="og:url" content="https://tal-tj.github.io/posts/dafa02b7.html">
+<meta property="og:site_name" content="TnoJ&#39;s Blog">
+<meta property="og:description" content="Unit 1 What are polymer?">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-03-09T11:33:29.000Z">
+<meta property="article:modified_time" content="2023-01-08T13:00:45.122Z">
+<meta property="article:author" content="TnoJ">
+<meta property="article:tag" content="Stady">
+<meta property="article:tag" content="Reading">
+<meta property="article:tag" content="Polymer">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://tal-tj.github.io/posts/dafa02b7.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>What are polymer翻译 | TnoJ's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">TnoJ's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/tal-tj" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tal-tj.github.io/posts/dafa02b7.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="TnoJ">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TnoJ's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          What are polymer翻译
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-03-09 19:33:29" itemprop="dateCreated datePublished" datetime="2022-03-09T19:33:29+08:00">2022-03-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/English/" itemprop="url" rel="index"><span itemprop="name">English</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Unit 1 What are polymer?</p>
+<span id="more"></span>
+<!--What-are-polymer翻译.md-->
+<p>What are polymers? For one thing, they are complex and giant
+molecules and are different from low molecular weight compounds like,
+say, common salt. <font color='blue'><strong>To contrast</strong></font>
+the difference, the molecular weight of common salt is only 58.5, while
+that of a polymer can be as high as several hundred thousand, even more
+than thousand thousands. These big molecules or ‘macro-molecules’ are
+made up of much smaller molecules, can be of one or more chemical
+compounds. <font color='blue'><strong>To illustrate</strong></font>,
+imagine that a set of rings has the same size and is made of the same
+material. When these things are interlinked, the chain formed can be
+considered as representing a polymer from molecules of the same
+compound. Alternatively, individual rings could be of different sizes
+and materials, and interlinked to represent a polymer from molecules of
+different compounds.</p>
+<ul>
+<li>to contrast：对比</li>
+<li>to illustrate：举例说明</li>
+</ul>
+<p>什么是高分子，一方面，它是一个复杂的、大的分子，而且不同于小分子质量的化合物，通常是盐。对比其不同，不同盐的分子质量仅有58.5，而高分子的质量可以达到几十万，甚至上百万。这些大分子或者说“高分子”是有许多更小的分子组成的，可以新城一个或者多个化合物。举例说明，想象一系列的有相同大小的环，并且由同样的材料制作而成。当这些环连接在一起时，这些可以被看作为代表有着同一分子的相同化合物的高分子的链就形成了。另一方面，不同尺寸的不同材料的环可以连接在一起形成不算化合物的分子。</p>
+<p>This interlinking of many units has given the polymer its name, poly
+meaning ‘many’ and mer meaning ‘part’ (in Greek). As an example, a
+<font color='blue'><strong>gaseous</strong></font> compound called
+<font color='blue'><strong>butadiene</strong></font>, with a molecular
+weight of 54, combines nearly 4000 times and gives a polymer known as
+polybutadiene (a synthetic rubber) with about 200 000 molecular weight.
+The low molecular weight compounds from which the polymers form are
+known as monomers. The picture is simply as follows:</p>
+<ul>
+<li>gaseous：气体的</li>
+<li>butadiene：丁二烯</li>
+</ul>
+<p>许多单元连接在一起给予了高分子它的名字，poly意味着“许多”，mer意味着“部分”（在希腊语中）。例如，一个气体的名为丁二烯分子质量为54的化合物连接了将近4000次后，然后给予了高分子一个新的名字，聚丁二烯（一种人造橡胶），有着约200,000的分子质量。来源于高分子中的小分子质量的化合物被称为单体。简单的描述：</p>
+<p><span class="math display">\[{\rm butadiene} + {\rm butadiene} +
+\dots + {\rm butadiene} \longrightarrow {\rm polybutadiene}\]</span></p>
+<p>One can thus see how a substance (monomer) with as small a molecule
+weight as 54 grow to become a giant molecule (polymer) of (54×4 000≈)200
+000 molecular weight. It is essentially the ‘giantness’ of the size of
+the polymer molecule that makes its behavior different from that of a
+commonly known chemical compound such as benzene. Solid benzene, for
+instance, melts to become liquid benzene at 5.5℃ and , on further
+heating, boils into gaseous benzene. As against this well-defined
+behavior of a simple chemical compound, a polymer like polyethylene does
+not melt sharply at one particular temperature into clean liquid.
+Instead, it becomes increasingly softer and, ultimately, turns into a
+very viscous, <font color='blue'><strong>tacky</strong></font> molten
+mass. Further heating of this hot, viscous, molten polymer does convert
+it into various gases but it is no longer polyethylene.</p>
+<ul>
+<li>tacky：低劣的；蹩脚的；乏味的；发粘的</li>
+</ul>
+<p>因此可以看到一个有着54的分子质量的物体（单体）逐渐的增长为（54 <span
+class="math inline">\(\times\)</span>
+4,000）200,000分子质量的大分子（高分子）。那确实是由于高分子的“巨大的”分子量使得其行为不同于不同的分子，例如，苯。例如，固态苯在5.5℃熔融变成液态苯，并且在更高的温度下会变成气态苯。相对于简单化合物的广泛定义，一个像聚乙烯一样的高分子不会再一个确定的温度下彻底的转变为液体。相反，它会逐渐软化，并且最终转变成一个非常粘的，发粘的熔融的一堆。将这种热而粘稠的聚合物熔融体进一步加热，不会转变成各种气体，但它不再是聚乙烯。</p>
+<p>Another <font color='blue'><strong>striking</strong></font>
+difference with respect to the behavior of a polymer and that of a low
+molecular weight compound concerns the dissolution process. Let us take,
+for example, sodium chloride and add it slowly to s fixed quantity of
+water. The salt, which represents a low molecular weight compound,
+dissolves in water up to s point (called saturation point) but,
+thereafter, any further quantity added does not go into solution but
+settles at the bottom and just remains there as solid. The viscosity of
+the saturated salt solution is not very much different from that of
+water. But if we take a polymer instead, say, polyvinyl alcohol, and add
+it to a fixed quantity of water, the polymer does not go into solution
+immediately. The globules of polyvinyl alcohol first absorb water, swell
+and get distorted in shape and after a long time go into solution. Also,
+we can add a very large quantity of the polymer to the same quantity of
+water without the saturation point ever being reached. As more and more
+quantity of polymer is added to water, the time taken for the
+dissolution of the polymer obviously increases and the mix ultimately
+assumes a soft, <font color='blue'><strong>dough</strong></font>-like
+<font color='blue'><strong>consistency</strong></font>. Another
+peculiarity is that, in water, polyvinyl alcohol never retains its
+original powdery nature as the excess sodium chloride does in a
+saturated salt solution. In conclusion, we can say that (1) the long
+time taken by polyvinyl alcohol for dissolution, (2) the absence of a
+saturation point, and (3) the increase in the viscosity are all
+characteristics of a typical polymer being dissolved in a solvent and
+these characteristics are attributed mainly to the large molecular size
+of the polymer. The behavior of a low molecular weight compound and that
+of a polymer on dissolution are illustrated in Fig.1.2.</p>
+<ul>
+<li>striking：惊人的；引人注目的</li>
+<li>dough：面团</li>
+<li>consistency：黏稠性</li>
+</ul>
+<p>另一个在高分子的形为方面和低分子量的溶解过程钟有着明显的不同。例如，让我们谈谈氯化钠和把它加入到一定质量的水中的过程吧。代表低分子量化合物的盐在一个确定的点（通常被称为饱和点）溶解在确定质量的水中，但是然后谭家任何质量的盐都不能溶解在水中，只能沉淀在瓶底。并且保持固态。这个饱和盐溶液的粘度和水相差无几。但是如果我们把其换成高分子，例如聚乙烯醇，那么把它加入到一定质量的水中，聚合物不会立即的溶解。这个聚乙烯醇小球会先吸收水，溶胀，并且开始变形，然后再很长的一段时间内溶解。而且我们可以添加非常多的质量的聚乙烯醇到相同质量的水中，但是其不会达到饱和。但越来越多的质量的高分子被加入到水中，
+高分子溶解的速度将会明显的变慢，并且最终变成一个软的、像面团一样的粘稠物。另一个特别的是是，聚乙烯醇在水中不会保持粉末的状态就像氯化钠加入到饱和的氯化钠溶液中一样的加入到水中。总之，我们可以知道，（1）聚乙烯醇溶解需要花费很长的时间，（2）没有饱和点，（3）当高分子被溶解在溶剂中，粘度的逐渐增加是其一个特点，并且这个特点主要是在大的分子量的聚合物中。低分子质量的化合物和高分子溶解的形为的示意图如Fig.1.2。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Stady/" rel="tag"><i class="fa fa-tag"></i> Stady</a>
+              <a href="/tags/Reading/" rel="tag"><i class="fa fa-tag"></i> Reading</a>
+              <a href="/tags/Polymer/" rel="tag"><i class="fa fa-tag"></i> Polymer</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/f0c3c467.html" rel="prev" title="4D printing: Fundamentals, materials, applications and challenges翻译">
+      <i class="fa fa-chevron-left"></i> 4D printing: Fundamentals, materials, applications and challenges翻译
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/posts/7d04601f.html" rel="next" title="Chain Polymerization翻译">
+      Chain Polymerization翻译 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">TnoJ</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">54</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">TnoJ</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : '[object Object]',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<!-- hexo injector body_end start --><script>for (i = 0; i < document.getElementsByTagName("img").length; i++){document.getElementsByTagName("img")[i].setAttribute("referrerpolice", "no-referrer");}</script><!-- hexo injector body_end end --></body>
+</html>
